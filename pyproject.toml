@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "alina-leadership"
+version = "0.1.0"
+description = "Actionable Leadership Intelligence for Navigation & Alignment"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "Ahmed El-Deeb"}]
+keywords = ["leadership", "management", "decision-support", "engineering-management", "ai"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Information Technology",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Office/Business",
+]
+dependencies = [
+  "pydantic>=2.8,<3",
+  "typer>=0.12,<1",
+  "rich>=13,<15",
+]
+
+[project.optional-dependencies]
+openai = ["openai>=3.7,<4"]
+api = ["fastapi>=0.115,<1", "uvicorn>=0.30,<1"]
+dev = ["pytest>=8,<10", "httpx>=0.27,<1", "coverage>=7,<8"]
+all = ["openai>=3.7,<4", "fastapi>=0.115,<1", "uvicorn>=0.30,<1"]
+
+[project.scripts]
+alina = "alina.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/ahmedeldeeb84/alina"
+Repository = "https://github.com/ahmedeldeeb84/alina"
+Issues = "https://github.com/ahmedeldeeb84/alina/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"

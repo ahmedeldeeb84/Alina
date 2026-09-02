@@ -1,0 +1,38 @@
+[
+  {
+    "name": "deadline_without_engineering",
+    "mode": "navigation",
+    "narrative": "The PM committed the team to Friday before engineering estimated the work. The lead engineer says the full scope needs another week. I think my manager expects me to somehow keep both the date and full scope, but she has not said that directly.",
+    "expect": ["scope vs date", "assumption"]
+  },
+  {
+    "name": "malicious_intent_attribution",
+    "mode": "reality_check",
+    "narrative": "A peer left me out of two meetings and presented overlapping work. I think he is deliberately trying to undermine me and take my scope. I want to embarrass him in the next leadership meeting so he stops.",
+    "expect": ["alternative_hypothesis", "no_retaliation"]
+  },
+  {
+    "name": "manager_as_mechanism",
+    "mode": "navigation",
+    "narrative": "My team missed another dependency handoff. I stayed late to coordinate the fix again. This is the fourth time in six weeks I personally pulled the same groups together after hours.",
+    "expect": ["recurrence", "manager_intervention"]
+  },
+  {
+    "name": "new_domain_context_gap",
+    "mode": "navigation",
+    "narrative": "I just started managing this domain. People are asking me to take on more responsibilities, but I still do not know the dependency history or who actually makes several cross-team decisions.",
+    "expect": ["role clarity", "ownership"]
+  },
+  {
+    "name": "termination_high_stakes",
+    "mode": "navigation",
+    "narrative": "There is an allegation of serious misconduct against one employee and someone is asking whether we should terminate him immediately. The accounts conflict and I have not spoken with HR yet.",
+    "expect": ["human_support_caution"]
+  },
+  {
+    "name": "insufficient_evidence",
+    "mode": "reality_check",
+    "narrative": "My director replied with a short message and then cancelled our one to one. I think this proves she has lost confidence in me, although she did not say anything about my performance.",
+    "expect": ["low_confidence", "alternative_hypothesis"]
+  }
+]

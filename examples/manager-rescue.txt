@@ -1,0 +1,1 @@
+My team missed another dependency handoff and I stayed late to coordinate the fix. This is the third time this month that I personally had to pull people together after hours. The immediate issue is fixed, but I am worried I am becoming the mechanism.

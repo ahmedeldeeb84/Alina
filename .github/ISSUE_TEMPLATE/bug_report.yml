@@ -1,0 +1,26 @@
+name: Bug report
+description: Report a reproducible ALINA defect
+title: "[bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Do not include confidential workplace narratives, employee-sensitive data, credentials, or company secrets. Use a synthetic example."
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Use a synthetic/minimized example.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: ALINA version
+      placeholder: 0.1.0

@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: pip install -e '.[dev,api,openai]'
+      - run: coverage run -m pytest
+      - run: coverage report --fail-under=85
+      - run: python -c "from openai import OpenAI; c=OpenAI(api_key='test'); assert hasattr(c.chat.completions, 'parse')"
+      - run: alina analyze examples/date-commitment.txt --provider heuristic --no-save --json > /tmp/alina.json

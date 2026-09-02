@@ -1,0 +1,25 @@
+name: Feature request
+description: Propose an improvement to ALINA
+title: "[feature] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: job
+    attributes:
+      label: Manager job-to-be-done
+      description: What management reasoning problem should this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Responsible-use check
+      options:
+        - label: This does not require employee scoring, covert monitoring, protected-trait inference, retaliation, or hidden personality profiling.
+          required: true
