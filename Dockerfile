@@ -1,7 +1,7 @@
 FROM python:3.13-slim
 WORKDIR /app
 COPY . .
-RUN pip install --no-cache-dir '.[api]'
+RUN pip install --no-cache-dir '.[all]'
 ENV ALINA_DB=/data/alina.db
 VOLUME ["/data"]
 EXPOSE 8787
