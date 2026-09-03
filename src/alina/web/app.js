@@ -8,6 +8,9 @@
   const errorBox = $("error-box");
   const submitButton = form.querySelector(".analyze-button");
   let mode = "navigation";
+  let currentHistoryId = null;
+  const HISTORY_KEY = "alina.structured-history.v1";
+  const HISTORY_LIMIT = 12;
 
   const example = {
     title: "Friday launch commitment",
@@ -16,6 +19,85 @@
     stakeholders: "PM, my manager, engineering lead, delivery team",
     constraints: "Friday customer expectation, team capacity, quality risk"
   };
+
+  function readHistory() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (_) {
+      return [];
+    }
+  }
+
+  function writeHistory(items) {
+    try {
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(items.slice(-HISTORY_LIMIT)));
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function buildHistoryContext() {
+    return readHistory().slice(-8).map((item) => ({
+      created_at: item.created_at || null,
+      title: item.title || null,
+      summary: item.summary || "",
+      tensions: Array.isArray(item.tensions) ? item.tensions.slice(0, 6) : [],
+      unknowns: Array.isArray(item.unknowns) ? item.unknowns.slice(0, 6) : [],
+      stakeholders: Array.isArray(item.stakeholders) ? item.stakeholders.slice(0, 8) : [],
+      recommendation: item.recommendation || null,
+      outcome: item.outcome || null
+    })).filter((item) => item.summary);
+  }
+
+  function updateHistoryStatus() {
+    const host = $("history-status");
+    if (!host) return;
+    const count = readHistory().length;
+    host.textContent = count
+      ? `${count} recent situation${count === 1 ? "" : "s"} remembered in this browser.`
+      : "No local history yet.";
+  }
+
+  function rememberAnalysis(payload, data) {
+    const id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`;
+    const item = {
+      id,
+      created_at: new Date().toISOString(),
+      title: payload.title || null,
+      summary: data.summary || payload.narrative.slice(0, 700),
+      tensions: (data.tensions || []).map((x) => x.name).filter(Boolean).slice(0, 6),
+      unknowns: (data.unknowns || []).map((x) => x.statement).filter(Boolean).slice(0, 6),
+      stakeholders: (data.stakeholders || []).map((x) => x.stakeholder).filter(Boolean).slice(0, 8),
+      recommendation: data.recommendation && data.recommendation.action ? data.recommendation.action : null,
+      outcome: null
+    };
+    const items = readHistory();
+    items.push(item);
+    return writeHistory(items) ? id : null;
+  }
+
+  function saveCurrentOutcome() {
+    const note = $("outcome-note").value.trim();
+    const status = $("outcome-status");
+    if (!currentHistoryId) {
+      status.textContent = "Analyze a situation first.";
+      return;
+    }
+    const items = readHistory();
+    const item = items.find((candidate) => candidate.id === currentHistoryId);
+    if (!item) {
+      status.textContent = "This situation is no longer in local history.";
+      return;
+    }
+    item.outcome = note || null;
+    if (writeHistory(items)) {
+      status.textContent = note ? "Outcome saved locally." : "Outcome cleared.";
+    } else {
+      status.textContent = "Browser storage is unavailable.";
+    }
+  }
 
   function splitList(value) {
     return value.split(",").map((item) => item.trim()).filter(Boolean);
@@ -188,6 +270,29 @@
     appendList($("conversation-avoid"), framing.avoid || [], "Avoid unsupported intent attribution.");
   }
 
+  function renderLongitudinal(items = []) {
+    const section = $("longitudinal-section");
+    const host = $("longitudinal-list");
+    clear(host);
+    if (!items.length) {
+      section.hidden = true;
+      return;
+    }
+    items.forEach((item) => {
+      const card = create("article", "stack-card");
+      card.appendChild(create("h4", "", item.pattern));
+      if (item.implication) card.appendChild(create("p", "", item.implication));
+      if (item.evidence && item.evidence.length) {
+        card.appendChild(create("p", "stack-meta", `Seen in: ${item.evidence.join(" · ")}`));
+      }
+      if (item.confidence) {
+        card.appendChild(create("p", "stack-meta", `${item.confidence} confidence · recurrence is descriptive, not causal`));
+      }
+      host.appendChild(card);
+    });
+    section.hidden = false;
+  }
+
   function render(data) {
     setText("result-title", $("title").value.trim() || "Analysis");
     setText("summary-text", data.summary);
@@ -199,6 +304,7 @@
     renderEvidence("assumptions-list", data.assumptions);
     renderEvidence("unknowns-list", data.unknowns);
     renderTensions(data.tensions);
+    renderLongitudinal(data.longitudinal_insights || []);
 
     const recommendation = data.recommendation || {};
     setText("recommendation-action", recommendation.action, "Gather the missing context before taking an irreversible step.");
@@ -266,6 +372,17 @@
     narrative.focus({ preventScroll: true });
   });
 
+  $("clear-history").addEventListener("click", () => {
+    try { localStorage.removeItem(HISTORY_KEY); } catch (_) {}
+    currentHistoryId = null;
+    updateHistoryStatus();
+    $("outcome-note").value = "";
+    $("outcome-status").textContent = "Local history cleared.";
+  });
+
+  $("save-outcome").addEventListener("click", saveCurrentOutcome);
+  updateHistoryStatus();
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     clearError();
@@ -277,7 +394,8 @@
       stakeholders: splitList($("stakeholders").value),
       constraints: splitList($("constraints").value),
       tags: [],
-      mode
+      mode,
+      history_context: buildHistoryContext()
     };
 
     if (payload.narrative.length < 20) {
@@ -300,6 +418,10 @@
         throw new Error(detail);
       }
       render(data);
+      currentHistoryId = rememberAnalysis(payload, data);
+      $("outcome-note").value = "";
+      $("outcome-status").textContent = currentHistoryId ? "Situation remembered locally." : "Browser storage is unavailable.";
+      updateHistoryStatus();
     } catch (error) {
       showError(error instanceof Error ? error.message : "Unable to analyze the situation. Please try again.");
     } finally {

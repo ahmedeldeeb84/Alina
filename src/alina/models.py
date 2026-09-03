@@ -32,6 +32,17 @@ class Reversibility(str, Enum):
     HIGH = "high"
 
 
+class PriorSituationContext(StrictModel):
+    created_at: str | None = None
+    title: str | None = None
+    summary: str
+    tensions: list[str] = Field(default_factory=list)
+    unknowns: list[str] = Field(default_factory=list)
+    stakeholders: list[str] = Field(default_factory=list)
+    recommendation: str | None = None
+    outcome: str | None = None
+
+
 class SituationInput(StrictModel):
     title: str | None = None
     narrative: str = Field(min_length=20, max_length=30_000)
@@ -40,6 +51,7 @@ class SituationInput(StrictModel):
     stakeholders: list[str] = Field(default_factory=list)
     tags: list[str] = Field(default_factory=list)
     mode: Mode = Mode.NAVIGATION
+    history_context: list[PriorSituationContext] = Field(default_factory=list, max_length=8)
 
     @field_validator("title", "goal")
     @classmethod
@@ -116,6 +128,13 @@ class SignalToWatch(StrictModel):
     meaning: str
 
 
+class LongitudinalInsight(StrictModel):
+    pattern: str
+    implication: str
+    evidence: list[str] = Field(default_factory=list)
+    confidence: Confidence = Confidence.MEDIUM
+
+
 class SituationAnalysis(StrictModel):
     schema_version: str = "1.0"
     summary: str
@@ -131,6 +150,7 @@ class SituationAnalysis(StrictModel):
     recommendation: Recommendation
     conversation_framing: ConversationFraming
     signals_to_watch: list[SignalToWatch] = Field(default_factory=list)
+    longitudinal_insights: list[LongitudinalInsight] = Field(default_factory=list)
     confidence: Confidence
     confidence_reason: str
     cautions: list[str] = Field(default_factory=list)
