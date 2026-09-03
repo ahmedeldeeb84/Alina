@@ -45,6 +45,9 @@ Issues = "https://github.com/ahmedeldeeb84/alina/issues"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+alina = ["web/*"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]

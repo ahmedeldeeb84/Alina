@@ -1,0 +1,12 @@
+{
+  "name": "ALINA — Navigation & Alignment",
+  "short_name": "ALINA",
+  "description": "A management reasoning workbench for ambiguous workplace situations.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f1ea",
+  "theme_color": "#f4f1ea",
+  "icons": [
+    { "src": "/assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

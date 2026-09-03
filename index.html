@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f4f1ea" />
+  <meta name="description" content="ALINA — Actionable Leadership Intelligence for Navigation & Alignment. A management reasoning workbench for ambiguous workplace situations." />
+  <title>ALINA — Management reasoning workbench</title>
+  <link rel="manifest" href="/assets/manifest.webmanifest" />
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to workspace</a>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="ALINA home">
+      <span class="brand-mark" aria-hidden="true">A</span>
+      <span class="brand-copy">
+        <strong>ALINA</strong>
+        <span>Navigation &amp; Alignment</span>
+      </span>
+    </a>
+    <nav class="topnav" aria-label="Primary navigation">
+      <a href="#how-it-works">How it works</a>
+      <a href="https://github.com/ahmedeldeeb84/Alina" target="_blank" rel="noreferrer">GitHub</a>
+      <a class="nav-cta" href="#workspace">Open workbench</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero shell" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Management reasoning workbench</p>
+        <h1 id="hero-title">Separate signal<br />from story.</h1>
+        <p class="hero-lead">Turn a messy workplace situation into a clear map of facts, assumptions, unknowns, tensions, options, and the smallest proportionate next move.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#workspace">Analyze a situation</a>
+          <button class="button button-quiet" id="load-example-hero" type="button">Try an example</button>
+        </div>
+        <div class="trust-row" aria-label="Product principles">
+          <span>Evidence before interpretation</span>
+          <span>Uncertainty stays visible</span>
+          <span>No employee scoring</span>
+        </div>
+      </div>
+
+      <div class="map-preview" aria-label="Example situation map">
+        <div class="map-preview-head">
+          <span class="status-dot"></span>
+          <span>Situation map</span>
+          <span class="map-preview-meta">structured reasoning</span>
+        </div>
+        <div class="map-flow">
+          <article class="mini-card mini-fact">
+            <span class="mini-kicker">FACT</span>
+            <p>The date was committed before engineering review.</p>
+          </article>
+          <article class="mini-card mini-assumption">
+            <span class="mini-kicker">ASSUMPTION</span>
+            <p>Leadership expects the original scope to remain fixed.</p>
+          </article>
+          <article class="mini-card mini-unknown">
+            <span class="mini-kicker">UNKNOWN</span>
+            <p>Which constraint is actually fixed: date, scope, or quality?</p>
+          </article>
+          <div class="map-arrow" aria-hidden="true">↓</div>
+          <article class="mini-card mini-next">
+            <span class="mini-kicker">NEXT MOVE</span>
+            <p>Clarify the fixed constraint before escalating or committing.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="principles shell" id="how-it-works" aria-labelledby="principles-title">
+      <div class="section-heading">
+        <p class="eyebrow">How ALINA reasons</p>
+        <h2 id="principles-title">Decompose before advising.</h2>
+        <p>ALINA does not reward narrative certainty. It makes the reasoning chain inspectable before proposing action.</p>
+      </div>
+      <div class="principle-grid">
+        <article><span>01</span><h3>Ground</h3><p>Separate stated facts from interpretations and missing context.</p></article>
+        <article><span>02</span><h3>Pressure-test</h3><p>Surface alternative hypotheses and evidence that could weaken your reading.</p></article>
+        <article><span>03</span><h3>Navigate</h3><p>Compare reversible moves, trade-offs, and stakeholder framing.</p></article>
+        <article><span>04</span><h3>Learn</h3><p>Notice when repeated incidents point to a mechanism that needs fixing.</p></article>
+      </div>
+    </section>
+
+    <section class="workspace shell" id="workspace" aria-labelledby="workspace-title">
+      <div class="workspace-heading">
+        <div>
+          <p class="eyebrow">Workbench</p>
+          <h2 id="workspace-title">What is happening?</h2>
+        </div>
+        <div class="mode-control" aria-label="Analysis mode">
+          <button class="mode-button is-active" type="button" data-mode="navigation" aria-pressed="true">Navigate</button>
+          <button class="mode-button" type="button" data-mode="reality_check" aria-pressed="false">Reality check</button>
+        </div>
+      </div>
+
+      <form id="analysis-form" class="analysis-form">
+        <label class="field field-wide">
+          <span class="field-label">Situation</span>
+          <span class="field-help">Describe what happened in your own words. Include what you know and what you currently believe.</span>
+          <textarea id="narrative" name="narrative" minlength="20" maxlength="30000" required placeholder="My PM committed us to a date without speaking to engineering. One engineer says the full scope is impossible..." rows="9"></textarea>
+          <span class="field-footer"><span id="char-count">0</span> / 30,000</span>
+        </label>
+
+        <div class="form-grid">
+          <label class="field">
+            <span class="field-label">What are you trying to decide? <em>optional</em></span>
+            <input id="goal" name="goal" type="text" placeholder="e.g. Whether to push back on the date" />
+          </label>
+          <label class="field">
+            <span class="field-label">Title <em>optional</em></span>
+            <input id="title" name="title" type="text" placeholder="e.g. Friday launch commitment" />
+          </label>
+          <label class="field">
+            <span class="field-label">Stakeholders <em>optional</em></span>
+            <input id="stakeholders" name="stakeholders" type="text" placeholder="PM, my manager, engineering lead" />
+            <span class="field-help compact">Comma-separated</span>
+          </label>
+          <label class="field">
+            <span class="field-label">Constraints <em>optional</em></span>
+            <input id="constraints" name="constraints" type="text" placeholder="Customer deadline, no extra headcount" />
+            <span class="field-help compact">Comma-separated</span>
+          </label>
+        </div>
+
+        <div class="form-footer">
+          <div class="privacy-note">
+            <span class="privacy-icon" aria-hidden="true">◌</span>
+            <span><strong>Private by design.</strong> This web session does not save your situation. Cloud analysis is used only when the server is configured for it.</span>
+          </div>
+          <div class="form-actions">
+            <button class="text-button" id="load-example" type="button">Load example</button>
+            <button class="button button-primary analyze-button" type="submit">
+              <span class="button-label">Build situation map</span>
+              <span class="button-spinner" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div id="error-box" class="error-box" role="alert" hidden></div>
+    </section>
+
+    <section class="results shell" id="results" hidden aria-live="polite">
+      <div class="results-topline">
+        <div>
+          <p class="eyebrow">Situation map</p>
+          <h2 id="result-title">Analysis</h2>
+        </div>
+        <div class="result-meta">
+          <span id="confidence-badge" class="meta-badge"></span>
+          <span id="provider-badge" class="meta-badge meta-muted"></span>
+        </div>
+      </div>
+
+      <article class="summary-card">
+        <span class="card-label">Neutral summary</span>
+        <p id="summary-text"></p>
+        <p id="confidence-reason" class="confidence-reason"></p>
+      </article>
+
+      <div class="evidence-grid">
+        <section class="evidence-panel evidence-facts">
+          <div class="panel-head"><span class="panel-index">F</span><div><h3>Stated facts</h3><p>Claims presented as observations or events.</p></div></div>
+          <div id="facts-list" class="evidence-list"></div>
+        </section>
+        <section class="evidence-panel evidence-assumptions">
+          <div class="panel-head"><span class="panel-index">A</span><div><h3>Assumptions</h3><p>Interpretations not directly established.</p></div></div>
+          <div id="assumptions-list" class="evidence-list"></div>
+        </section>
+        <section class="evidence-panel evidence-unknowns">
+          <div class="panel-head"><span class="panel-index">U</span><div><h3>Material unknowns</h3><p>Missing context that could change the decision.</p></div></div>
+          <div id="unknowns-list" class="evidence-list"></div>
+        </section>
+      </div>
+
+      <section class="result-section" id="tensions-section">
+        <div class="result-section-head"><span>01</span><div><h3>Core tensions</h3><p>What is actually in conflict.</p></div></div>
+        <div id="tensions-list" class="tension-grid"></div>
+      </section>
+
+      <section class="recommendation-block">
+        <div class="recommendation-kicker">Recommended next move</div>
+        <h3 id="recommendation-action"></h3>
+        <p id="recommendation-rationale"></p>
+        <div class="first-step"><span>First step</span><p id="recommendation-first-step"></p></div>
+      </section>
+
+      <section class="result-section" id="options-section">
+        <div class="result-section-head"><span>02</span><div><h3>Options &amp; trade-offs</h3><p>Compare before you commit.</p></div></div>
+        <div id="options-list" class="options-grid"></div>
+      </section>
+
+      <div class="detail-grid">
+        <section class="result-section compact-section" id="hypotheses-section">
+          <div class="result-section-head"><span>03</span><div><h3>Alternative hypotheses</h3><p>Readings that challenge premature certainty.</p></div></div>
+          <div id="hypotheses-list" class="stack-list"></div>
+        </section>
+        <section class="result-section compact-section" id="stakeholders-section">
+          <div class="result-section-head"><span>04</span><div><h3>Stakeholder lenses</h3><p>Interests, constraints, and uncertainty.</p></div></div>
+          <div id="stakeholders-list" class="stack-list"></div>
+        </section>
+      </div>
+
+      <section class="conversation-card">
+        <div class="conversation-head"><span class="conversation-icon" aria-hidden="true">↗</span><div><span class="card-label">Conversation framing</span><h3 id="conversation-objective"></h3></div></div>
+        <blockquote id="conversation-opening"></blockquote>
+        <div class="conversation-columns">
+          <div><span class="sub-label">Questions to ask</span><ul id="conversation-questions"></ul></div>
+          <div><span class="sub-label">Clear ask</span><p id="conversation-ask"></p><span class="sub-label spacing-top">Avoid</span><ul id="conversation-avoid"></ul></div>
+        </div>
+      </section>
+
+      <div class="detail-grid detail-bottom">
+        <section class="result-section compact-section"><div class="result-section-head"><span>05</span><div><h3>Signals to watch</h3><p>Evidence that should update your reading.</p></div></div><div id="signals-list" class="stack-list"></div></section>
+        <section class="result-section compact-section"><div class="result-section-head"><span>06</span><div><h3>Risks &amp; cautions</h3><p>What could go wrong in either direction.</p></div></div><div id="risks-list" class="stack-list"></div></section>
+      </div>
+
+      <div class="results-footer">
+        <p>ALINA is decision support, not an authority. Keep human judgment in the loop.</p>
+        <button class="button button-quiet" id="analyze-another" type="button">Analyze another situation</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer shell">
+    <div><strong>ALINA</strong><span>Actionable Leadership Intelligence for Navigation &amp; Alignment</span></div>
+    <div><span>Open source · v0.1</span><a href="https://github.com/ahmedeldeeb84/Alina" target="_blank" rel="noreferrer">View on GitHub ↗</a></div>
+  </footer>
+
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>
