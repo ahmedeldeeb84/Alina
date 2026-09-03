@@ -226,18 +226,24 @@
         <section class="result-section compact-section"><div class="result-section-head"><span>06</span><div><h3>Risks &amp; cautions</h3><p>What could go wrong in either direction.</p></div></div><div id="risks-list" class="stack-list"></div></section>
       </div>
 
-            <section class="conversation-card" id="outcome-memory">
-        <div class="conversation-head"><span class="conversation-icon" aria-hidden="true">↺</span><div><span class="card-label">Outcome memory</span><h3>What happened after this?</h3></div></div>
-        <p class="confidence-reason">Add the outcome when you know it. ALINA will keep it in this browser and use it to pressure-test future recommendations.</p>
-        <label class="field spacing-top">
-          <span class="field-label">Outcome <em>optional</em></span>
-          <textarea id="outcome-note" rows="3" maxlength="1500" placeholder="e.g. We clarified ownership, reduced scope, and the launch went ahead on Friday."></textarea>
-        </label>
-        <div class="form-actions spacing-top">
-          <button class="button button-quiet" id="save-outcome" type="button">Save outcome</button>
-          <span id="outcome-status" class="field-help"></span>
+      <details class="conversation-card" id="outcome-memory">
+        <summary class="conversation-head">
+          <span class="conversation-icon" aria-hidden="true">↺</span>
+          <span><span class="card-label">Outcome memory</span><br /><strong>Update this situation later</strong></span>
+        </summary>
+        <div class="spacing-top">
+          <h3>What happened?</h3>
+          <p class="confidence-reason">When you know how this played out, add the outcome. ALINA will keep it in this browser and use it to pressure-test future recommendations.</p>
+          <label class="field spacing-top">
+            <span class="field-label">Outcome <em>optional</em></span>
+            <textarea id="outcome-note" rows="3" maxlength="1500" placeholder="e.g. We clarified ownership, reduced scope, and the launch went ahead on Friday."></textarea>
+          </label>
+          <div class="form-actions spacing-top">
+            <button class="button button-quiet" id="save-outcome" type="button">Save outcome</button>
+            <span id="outcome-status" class="field-help"></span>
+          </div>
         </div>
-      </section>
+      </details>
 
       <div class="results-footer">
         <p>ALINA is decision support, not an authority. Keep human judgment in the loop.</p>
